@@ -12,6 +12,7 @@ plt.style.use('seaborn-darkgrid')
 import matplotlib.gridspec as gridspec
 import matplotlib.dates as mdates
 import argparse
+import time
 from time import mktime
 from datetime import datetime
 
@@ -26,9 +27,10 @@ episode_rewards = checkpoint['episode_rewards']
 episode_durations = checkpoint['episode_durations']
 episode_lengths = checkpoint['episode_lengths']
 
-episode_durations = [datetime.fromtimestamp(mktime(t)) for t in episode_durations]
+episode_durations_str = [time.strftime('%H %M %S', t) for t in episode_durations]
+episode_durations = [datetime.strptime(t, '%H %M %S') for t in episode_durations_str]
 
-fig = plt.figure(figsize=(10,10))
+fig = plt.figure(figsize=(10,15))
 gs = gridspec.GridSpec(3,1, hspace=0.5)
 ax = pl.subplot(gs[0, 0])
 ax.plot(episode_durations, episode_rewards)
@@ -37,7 +39,7 @@ ax.set_xlabel('Time')
 ax.set_ylabel('Reward')
 
 plt.gcf().autofmt_xdate()
-myFmt = mdates.DateFormatter('%Mh %Mm %Ss')
+myFmt = mdates.DateFormatter('%Hh %Mm %Ss')
 plt.gca().xaxis.set_major_formatter(myFmt)
 
 ax = pl.subplot(gs[1, 0])
