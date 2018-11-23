@@ -11,7 +11,7 @@ class Config:
         self.conv1_reset = False
         self.conv2_reset = False
         self.conv3_reset = False
-        self.conv4_reset = False
-        self.lstm_reset = False
-        self.critic_linear_reset = False
-        self.actor_linear_reset = False
+        self.conv4_reset = True
+        self.lstm_reset = True
+        self.critic_linear_reset = True
+        self.actor_linear_reset = True
