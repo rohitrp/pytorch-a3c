@@ -1,6 +1,11 @@
+import os
 import torch
 import matplotlib
 matplotlib.use('TkAgg')
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import matplotlib.pylab as pl
 plt.style.use('seaborn-darkgrid')
@@ -9,7 +14,6 @@ import matplotlib.dates as mdates
 import argparse
 from time import mktime
 from datetime import datetime
-import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--checkpoint', help='Path to checkpoint', required=True)
