@@ -9,7 +9,7 @@ from model import ActorCritic
 
 import os
 
-def test(rank, args, shared_model, counter):
+def test(rank, args, shared_model, counter, optimizer):
     torch.manual_seed(args.seed + rank)
 
     env = create_atari_env(args.env_name)
@@ -70,7 +70,8 @@ def test(rank, args, shared_model, counter):
             os.makedirs(os.path.dirname(checkpoint_filename), exist_ok=True)
 
             torch.save({
-                'shared_model': shared_model.state_dict(),
+                'model': model.state_dict(),
+                'optimizer': optimizer.state_dict(),
                 'episode_rewards': episode_rewards,
                 'episode_durations': episode_durations,
                 'episode_lengths': episode_lengths
