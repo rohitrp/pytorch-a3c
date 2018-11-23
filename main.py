@@ -40,6 +40,8 @@ parser.add_argument('--env-name', default='PongDeterministic-v4',
                     help='environment to train on (default: PongDeterministic-v4)')
 parser.add_argument('--no-shared', default=False,
                     help='use an optimizer without shared momentum.')
+parser.add_argument('--tag', required=True,
+                    help='tag for current experiment')
 
 
 if __name__ == '__main__':
