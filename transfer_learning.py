@@ -12,6 +12,7 @@ from envs import create_atari_env
 from model import ActorCritic
 from test import test
 from train import train
+from torch.nn.init import xavier_uniform_ as Xavier
 
 # Based on
 # https://github.com/pytorch/examples/tree/master/mnist_hogwild
@@ -86,6 +87,8 @@ if __name__ == '__main__':
         from configs.all_train import Config
     elif tag == 'train_conv4':
         from configs.train_conv4 import Config
+    elif tag == 'reset_conv4_lstm_fc':
+        from configs.reset_conv4_lstm_fc import Config
     else:
         raise 'Invalid config'
     
@@ -112,6 +115,41 @@ if __name__ == '__main__':
     
     for parameter in shared_model.actor_linear.parameters():
         parameter.requires_grad = config.actor_linear_train
+
+
+    if(config.conv1_reset==True):
+        Xavier(shared_model.conv1.weight)
+        shared_model.conv1.bias.data.fill_(0.01)
+
+    if(config.conv2_reset==True):
+        Xavier(shared_model.conv2.weight)
+        shared_model.conv2.bias.data.fill_(0.01)
+
+    if(config.conv3_reset==True):
+        Xavier(shared_model.conv3.weight)
+        shared_model.conv3.bias.data.fill_(0.01)
+
+    if(config.conv4_reset==True):
+        Xavier(shared_model.conv4.weight)
+        shared_model.conv4.bias.data.fill_(0.01)
+
+    if(config.lstm_reset==True):
+        #Xavier(shared_model.lstm.weight)
+        #shared_model.lstm.bias.data.fill_(0.01)
+        for name, param in shared_model.lstm.named_parameters():
+          if 'bias' in name:
+             nn.init.constant_(param, 0.0)
+          elif 'weight' in name:
+             nn.init.xavier_normal_(param)
+    
+    if(config.critic_linear_reset==True):
+        Xavier(shared_model.critic_linear.weight)
+        shared_model.critic_linear.bias.data.fill_(0.01)
+
+    if(config.actor_linear_reset==True):
+        Xavier(shared_model.actor_linear.weight)
+        shared_model.actor_linear.bias.data.fill_(0.01)
+    
 
     if args.no_shared:
         optimizer = None
