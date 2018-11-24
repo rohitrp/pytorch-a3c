@@ -91,6 +91,8 @@ if __name__ == '__main__':
         from configs.reset_conv4_lstm_fc import Config
     elif tag == 'reset_lstm_fc':
         from configs.reset_lstm_fc import Config
+    elif tag == 'reset_fc':
+        from configs.reset_fc import Config
     else:
         raise 'Invalid config'
     
