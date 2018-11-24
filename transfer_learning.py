@@ -96,44 +96,56 @@ if __name__ == '__main__':
 
     # Freeze layers based on config values
     for parameter in shared_model.conv1.parameters():
+        print('Retraining Conv1')
         parameter.requires_grad = config.conv1_train
     
     for parameter in shared_model.conv2.parameters():
+        print('Retraining Conv2')
         parameter.requires_grad = config.conv2_train
     
     for parameter in shared_model.conv3.parameters():
+        print('Retraining Conv3')
         parameter.requires_grad = config.conv3_train
     
     for parameter in shared_model.conv4.parameters():
+        print('Retraining Conv3')
         parameter.requires_grad = config.conv4_train
     
     for parameter in shared_model.lstm.parameters():
+        print('Retraining LSTM')
         parameter.requires_grad = config.lstm_train
     
     for parameter in shared_model.critic_linear.parameters():
+        print('Retraining Critic Linear')    
         parameter.requires_grad = config.critic_linear_train
     
     for parameter in shared_model.actor_linear.parameters():
+        print('Retraining Actor Linear')
         parameter.requires_grad = config.actor_linear_train
 
 
     if(config.conv1_reset==True):
+        print('Resetting Conv1')
         Xavier(shared_model.conv1.weight)
         shared_model.conv1.bias.data.fill_(0.01)
 
     if(config.conv2_reset==True):
+        print('Resetting Conv2')
         Xavier(shared_model.conv2.weight)
         shared_model.conv2.bias.data.fill_(0.01)
 
     if(config.conv3_reset==True):
+        print('Resetting Conv3')
         Xavier(shared_model.conv3.weight)
         shared_model.conv3.bias.data.fill_(0.01)
 
     if(config.conv4_reset==True):
+        print('Resetting Conv4')    
         Xavier(shared_model.conv4.weight)
         shared_model.conv4.bias.data.fill_(0.01)
 
     if(config.lstm_reset==True):
+        print('Resetting LSTM')
         #Xavier(shared_model.lstm.weight)
         #shared_model.lstm.bias.data.fill_(0.01)
         for name, param in shared_model.lstm.named_parameters():
@@ -143,10 +155,12 @@ if __name__ == '__main__':
              nn.init.xavier_normal_(param)
     
     if(config.critic_linear_reset==True):
+        print('Resetting Critic Linear')
         Xavier(shared_model.critic_linear.weight)
         shared_model.critic_linear.bias.data.fill_(0.01)
 
     if(config.actor_linear_reset==True):
+        print('Resetting Actor Linear')
         Xavier(shared_model.actor_linear.weight)
         shared_model.actor_linear.bias.data.fill_(0.01)
     
